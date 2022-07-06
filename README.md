@@ -2,12 +2,12 @@
 
 Stands for **Req**uest **It**. Pronounced as **req-it**.  
 
-This package is meant to make the request thtrough HTTP/REST/GraphQL as much easy to use as possible, and reduce the time to encapsulation and deal with response unmarshalling and error handling especially.
+This package is meant to request HTTP/REST/GraphQL as much easy to use as possible, reduce the time to encapsulation and deal with response unmarshalling and error handling especially.
 
 ## TODO
 
 - [x] BaseURL configuration
-- [x] Global haaders configuration
+- [x] Global headers configuration
 - [x] Basic mock support
 - [x] Header override per request
 - [x] GET method
