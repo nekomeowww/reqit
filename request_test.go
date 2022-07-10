@@ -2,6 +2,7 @@ package reqit
 
 import (
 	"net/http"
+	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -43,5 +44,42 @@ func TestMergeHeadersFrom(t *testing.T) {
 		assert.Equal([]string{"Val1", "Val2"}, request.Header[headerHName])
 		assert.Equal(headerXVal[0], request.Header.Get(headerXName))
 		assert.Equal(headerXVal, request.Header[headerXName])
+	})
+}
+
+func TestParseDesiredType(t *testing.T) {
+	c := NewClient()
+	request := newRequest(c, http.MethodGet, "", nil)
+
+	t.Run("Struct", func(t *testing.T) {
+		assert := assert.New(t)
+
+		type tStruct struct {
+			Key string `json:"key"`
+		}
+
+		var ts tStruct
+		assert.Equal(reflect.Struct, request.parseDestKind(&ts))
+	})
+
+	t.Run("Map", func(t *testing.T) {
+		assert := assert.New(t)
+
+		var ts map[string]string
+		assert.Equal(reflect.Map, request.parseDestKind(&ts))
+	})
+
+	t.Run("Slice", func(t *testing.T) {
+		assert := assert.New(t)
+
+		var ts []string
+		assert.Equal(reflect.Slice, request.parseDestKind(&ts))
+	})
+
+	t.Run("String", func(t *testing.T) {
+		assert := assert.New(t)
+
+		var ts string
+		assert.Equal(reflect.String, request.parseDestKind(&ts))
 	})
 }

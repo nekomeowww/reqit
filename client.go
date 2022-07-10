@@ -53,6 +53,10 @@ func configureClientByClientOptions(c *Client, options ClientOptions) {
 	}
 }
 
-func (c *Client) Get(uri string, param map[string]string) *Request {
-	return newRequest(c, http.MethodGet, uri, strings.NewReader(mapToQuery(param).Encode()))
+func (c *Client) Get(uri string, query map[string]string) *Request {
+	return newRequest(c, http.MethodGet, uri, mapToQuery(query))
+}
+
+func (c *Client) Post(uri string, query map[string]string) *Request {
+	return newRequest(c, http.MethodPost, uri+mapToQuery(query).Encode(), nil)
 }
